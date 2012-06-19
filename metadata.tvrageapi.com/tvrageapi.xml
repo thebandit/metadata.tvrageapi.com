@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?><scraper framework="1" date="2011-10-12" name="TV Rage API" content="tvshows" thumb="tvrage.jpg" language="en">
+	<NfoUrl dest="3">
+		<RegExp input="$$1" output="&lt;url&gt;http://services.tvrage.com/full_show_info.php?sid=\1&lt;/url&gt;" dest="3">
+			<expression>http://(?:www\.)?tvrage.com/shows/id-([0-9]+)</expression>
+		</RegExp>
+	</NfoUrl>
+	<CreateSearchUrl dest="3">
+		<RegExp input="$$1" output="&lt;url&gt;http://services.tvrage.com/feeds/search.php?show=\1&lt;/url&gt;" dest="3">
+			<expression />
+		</RegExp>
+	</CreateSearchUrl>
+	<GetSearchResults dest="3">
+		<RegExp input="$$4" output="&lt;results&gt;\1&lt;/results&gt;" dest="3">
+			<RegExp input="$$1" output="&lt;entity&gt;&lt;title&gt;\2&lt;/title&gt;&lt;id&gt;\1&lt;/id&gt;&lt;url cache=&quot;\1.xml&quot;&gt;http://services.tvrage.com/feeds/full_show_info.php?sid=\1&lt;/url&gt;&lt;/entity&gt;" dest="4">
+				<expression repeat="yes">&lt;showid&gt;(\d+).*?&lt;name&gt;([^&lt;]*)&lt;/name&gt;</expression>
+			</RegExp>
+			<expression noclean="1" />
+		</RegExp>
+	</GetSearchResults>
+	<GetDetails dest="7">
+		<RegExp input="$$5" output="&lt;details&gt;\1&lt;/details&gt;" dest="7">
+			<RegExp input="$$1" output="&lt;title&gt;\1&lt;/title&gt;" dest="5">
+				<expression>&lt;name&gt;([^&lt;]*)&lt;/name&gt;</expression>
+			</RegExp>
+			<RegExp input="$$1" output="&lt;thumb&gt;\1&lt;/thumb&gt;" dest="5+">
+				<expression>&lt;image&gt;([^&lt;]*)&lt;/image&gt;</expression>
+			</RegExp>
+			<RegExp input="$$1" output="&lt;status&gt;\1&lt;/status&gt;" dest="5+">
+				<expression trim="1">&lt;status&gt;([^&lt;]*)&lt;/status&gt;</expression>
+			</RegExp>
+			<RegExp input="$$1" output="&lt;premiered&gt;\1&lt;/premiered&gt;" dest="5+">
+				<expression trim="1">&lt;started&gt;([^&lt;]*)&lt;/started&gt;</expression>
+			</RegExp>
+			<RegExp input="$$1" output="&lt;runtime&gt;\1&lt;/runtime&gt;" dest="5+">
+				<expression trim="1">&lt;runtime&gt;([^&lt;]*)&lt;/runtime&gt;</expression>
+			</RegExp>
+			<RegExp input="$$6" output="\1" dest="5+">
+				<RegExp input="$$1" output="\1" dest="6">
+					<expression trim="1" noclean="1">&lt;genres&gt;(.*?)&lt;/genres&gt;</expression>
+				</RegExp>
+				<expression trim="1" noclean="1" />
+			</RegExp>
+			<RegExp input="$$1" output="&lt;episodeguide&gt;&lt;id&gt;$$2&lt;/id&gt;&lt;url cache=&quot;$$2-eps.xml&quot;&gt;http://www.tvrage.com/shows/id-$$2/episode_list/all&lt;/url&gt;&lt;/episodeguide&gt;" dest="5+">
+				<expression trim="1">&lt;showlink&gt;(.*?)&lt;/showlink&gt;</expression>
+			</RegExp>
+			<expression noclean="1" />
+		</RegExp>
+	</GetDetails>
+	<GetEpisodeList dest="3">
+		<RegExp input="$$7" output="&lt;episodeguide&gt;\1&lt;/episodeguide&gt;" dest="3">
+			<RegExp input="$$2" output="\1" dest="8">
+				<expression>id-(\d+)</expression>
+			</RegExp>
+			<RegExp input="$$1" output="&lt;episode&gt;&lt;epnum&gt;\2&lt;/epnum&gt;&lt;season&gt;\1&lt;/season&gt;&lt;url cache=&quot;$$8-\1x\2.xml&quot;&gt;http://services.tvrage.com/feeds/episodeinfo.php?sid=$$8&amp;ep=\1x\2&lt;/url&gt;&lt;/episode&gt;" dest="7+">
+				<expression repeat="yes" trim="1,2">&lt;td.*? &gt;&lt;a href=.*?episodes/\d+(?:'|").*?&gt;(\d{1,})x(\d{2,3}).*?&lt;/td&gt;</expression>
+			</RegExp>
+			<expression noclean="1" />
+		</RegExp>
+	</GetEpisodeList>
+	<GetEpisodeDetails dest="3">
+		<RegExp input="$$5" output="&lt;details&gt;\1&lt;/details&gt;" dest="3">
+			<RegExp input="$$1" output="&lt;title&gt;\1&lt;/title&gt;" dest="5">
+				<expression trim="1">&lt;title&gt;(.*?)&lt;/title&gt;</expression>
+			</RegExp>
+			<RegExp input="$$1" output="&lt;aired&gt;\1&lt;/aired&gt;" dest="5+">
+				<expression trim="1">&lt;episode&gt;.*?&lt;airdate&gt;(.*?)&lt;/airdate&gt;.*?&lt;/episode&gt;</expression>
+			</RegExp>
+			<expression noclean="1" />
+		</RegExp>
+	</GetEpisodeDetails>
+</scraper>
