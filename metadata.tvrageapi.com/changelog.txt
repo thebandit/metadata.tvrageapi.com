@@ -1,3 +1,6 @@
+[B]1.0.3[/B]
+- Remove unused settings
+
 [B]1.0.2[/B]
 - Fixed episode list urls
 
