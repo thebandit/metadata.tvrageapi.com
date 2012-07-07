@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
+
 <strings>
-    
+	<string id="30001">Search via trakt.tv. Enabling will provide better show info but sometimes trakt's tvrage_id is wrong.</string>
 </strings>
