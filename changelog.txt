@@ -1,3 +1,6 @@
+[B]1.0.5[/B]
+- Updated for sites api/layout changes
+
 [B]1.0.4[/B]
 - Added ability to lookup shows at trakt.tv.
 - Default is now to lookup at trakt.tv. Enabling will provide better show info but sometimes trakt's tvrage_id is wrong.
