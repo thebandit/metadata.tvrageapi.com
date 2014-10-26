@@ -2,4 +2,6 @@
 
 <settings>
 	<setting label="30001" type="bool" id="traktlookup" default="true"/>
+	<setting label="30002" type="lsep"/>
+	<setting label="30003" type="lsep"/>
 </settings>

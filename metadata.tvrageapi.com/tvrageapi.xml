@@ -18,7 +18,7 @@
 	<GetSearchResults dest="3">
 		<RegExp input="$$4" output="&lt;results&gt;\1&lt;/results&gt;" dest="3">
 			<RegExp conditional="traktlookup" input="$$1" output="&lt;entity&gt;&lt;title&gt;\1&lt;/title&gt;&lt;id&gt;\3&lt;/id&gt;&lt;url cache=&quot;\2.xml&quot;&gt;http://api.trakt.tv/show/summary.json/be64291aafbbbe62fdc4f3aa0edb4073/\2&lt;/url&gt;&lt;/entity&gt;" dest="4">
-				<expression repeat="yes">{"title":"([^"]+)".*?"tvdb_id":"([^"]+)".*?"tvrage_id":"([^"]+)"</expression>
+				<expression repeat="yes">{"title":"([^"]+)".*?"tvdb_id":(\d+).*?"tvrage_id":(\d+)</expression>
 			</RegExp>
 			<RegExp conditional="!traktlookup" input="$$1" output="&lt;entity&gt;&lt;title&gt;\2&lt;/title&gt;&lt;id&gt;\1&lt;/id&gt;&lt;url cache=&quot;\1.xml&quot;&gt;http://services.tvrage.com/feeds/full_show_info.php?sid=\1&lt;/url&gt;&lt;/entity&gt;" dest="4">
 				<expression repeat="yes">&lt;showid&gt;(\d+).*?&lt;name&gt;([^&lt;]*)&lt;/name&gt;</expression>
@@ -38,7 +38,7 @@
 				<expression>"certification":"([^"]+)",</expression>
 			</RegExp>
 			<RegExp input="$$1" output="&lt;rating&gt;\1&lt;/rating&gt;" dest="5+">
-				<expression>"percentage":"([^"]+)",</expression>
+				<expression>"percentage":([^,]+),</expression>
 			</RegExp>
 			<RegExp input="$$1" output="&lt;studio&gt;\1&lt;/studio&gt;" dest="5+">
 				<expression>"network":"([^"]+)",</expression>
@@ -115,7 +115,7 @@
 				<expression>id-(\d+)</expression>
 			</RegExp>
 			<RegExp input="$$1" output="&lt;episode&gt;&lt;epnum&gt;\2&lt;/epnum&gt;&lt;season&gt;\1&lt;/season&gt;&lt;url cache=&quot;$$8-\1x\2.xml&quot;&gt;http://services.tvrage.com/feeds/episodeinfo.php?sid=$$8&amp;ep=\1x\2&lt;/url&gt;&lt;/episode&gt;" dest="7+">
-				<expression repeat="yes" trim="1,2">&lt;td.*? &gt;&lt;a href=.*?episodes/\d+(?:'|").*?&gt;(\d{1,})x(\d{2,3}).*?&lt;/td&gt;</expression>
+				<expression repeat="yes" trim="1,2">&lt;td.*?href=.*?episodes.*?&gt;(\d{1,})x(\d{2,3})&lt;</expression>
 			</RegExp>
 			<expression noclean="1" />
 		</RegExp>

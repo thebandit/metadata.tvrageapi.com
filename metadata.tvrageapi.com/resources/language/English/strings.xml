@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 
 <strings>
-	<string id="30001">Search via trakt.tv. Enabling will provide better show info but sometimes trakt's tvrage_id is wrong.</string>
+	<string id="30001">Search via trakt.tv</string>
+	<string id="30002">Will provide better show info but trakts tvrage id can be missing or wrong</string>
+	<string id="30003">which will cause the episodes to not scrape if enabled.</string>
 </strings>
